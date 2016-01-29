@@ -1,34 +1,30 @@
 import sys
-from node import Node
+import numpy
+from point import Point
 
+class ArtificialNeuralNetwork:
 
-def parse_file(filename):
-    """Parse the file line to nodes"""
-    nodes = []
-    with open(filename, "r") as infile:
-        for line in infile:
-            line = line[:-2]
-            data = line.split(" ")
-            nodes.append(Node(data[0], data[1], data[2]))
-        return nodes
+    def __init__(self, num_hidden_layers):
+        self.num_hidden_layers = num_hidden_layers
+        self.weights = np.random.randrom(2, 1);
 
+    def sigmoid(x):
+        return 1 / (1 + np.exp(-1 * x))
 
-def main():
-    args = sys.argv[1:]
-    if len(args) > 0:
-        filename = args[0]
-        num_node = 0
-        percentage = 0
-        if len(args) > 3:
-            if args[1] == "h":
-                num_node = int(args[2])
-                if args[3] == "p":
-                    percentage = float(args[4])
-            elif args[1] == "p":
-                percentage = float(args[2])
+    def sigmoidPrime(x):
+        return x*(1-x)
 
-        nodes = parse_file(filename)
+    def classify(point):
+        return round(sigmod(np.dot(point, self.weights)))
 
-
-if __name__ == "__main__":
-    main()
+    def train(self, input_set, output_set):
+        percentage = round(len(input_set) * 0.20)
+        test_set = input_set[:percentage]
+        training_set = input_set[percentage:]
+        print training_set
+        for n in xrange(self.num_hidden_layers):
+            hidden_layer = sigmod(np.dot(training_set, weights))
+            error = output_set - hidden_layer
+            delta = error * sigmoidPrime()
+            self.weights += np.dot(training_set, self.weights)
+        print hidden_layer

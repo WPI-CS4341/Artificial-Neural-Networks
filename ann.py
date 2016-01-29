@@ -1,34 +1,41 @@
 import sys
-from node import Node
+import numpy as np
 
+class Artificial_Neural_Network:
 
-def parse_file(filename):
-    """Parse the file line to nodes"""
-    nodes = []
-    with open(filename, "r") as infile:
-        for line in infile:
-            line = line[:-2]
-            data = line.split(" ")
-            nodes.append(Node(data[0], data[1], data[2]))
-        return nodes
+    def __init__(self, hidden_layer_size):
+        self.hidden_layer_size = hidden_layer_size
+        self.input_weights = np.random.randn(2, self.hidden_layer_size)
+        self.output_weights = np.random.randn(self.hidden_layer_size, 1)
 
+    def sigmoid(self, z):
+        return 1 / (1 + np.exp(-1 * z))
 
-def main():
-    args = sys.argv[1:]
-    if len(args) > 0:
-        filename = args[0]
-        num_node = 0
-        percentage = 0
-        if len(args) > 3:
-            if args[1] == "h":
-                num_node = int(args[2])
-                if args[3] == "p":
-                    percentage = float(args[4])
-            elif args[1] == "p":
-                percentage = float(args[2])
+    # def sigmoidPrime(x):
+    #     return x*(1-x)
 
-        nodes = parse_file(filename)
+    def classify(self, X):
+        print(x)
+        print(self.input_weights)
+        print(np.dot(X, self.input_weights))
+        # hidden_layer = self.sigmoid(np.dot(X, self.input_weights))
+        # output = self.sigmoid(np.dot(hidden_layer, self.output_weights))
+        return np.round(output)
 
+    def train(self, input_set, output_set):
+        percentage = round(len(training_set) * 0.20)
+        test_set = input_set[:percentage]
+        training_set = input_set[percentage:]
 
-if __name__ == "__main__":
-    main()
+        for n in xrange(self.num_hidden_layers):
+            hidden_layer = self.sigmoid(np.dot(input_set, self.input_weights))
+            output_layer = self.sigmoid(np.dot(hidden_layer, self.output_weights))
+
+            output_layer_error = output_set - predicted_output
+            output_layer_delta = output_error * self.sigmoidPrime(output_layer)
+
+            hidden_layer_error = output_delta.dot(self.output_weights.T)
+            hidden_layer_delta = hidden_layer_error * self.sigmoidPrime(hidden_layer)
+
+            self.input_weights += input_set.T.dot(hidden_layer_delta)
+            self.output_weights += hidden_layer.T.dot(output_layer_delta)

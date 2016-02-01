@@ -54,7 +54,7 @@ def main():
         )
 
         ann.train(training, training_output)
-        ann.classify(testing, testing_output)
+        ann.test(testing, testing_output)
 
         # learner = Back_Prop_Learner()
         # learner.learn(examples, ann)
